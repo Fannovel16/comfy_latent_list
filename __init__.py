@@ -1,15 +1,18 @@
 from . import latent_nodes
 from .gen_latent_list_nodes import EmptyLatentList
-import copy
+import copy, uuid
 
 NODE_CLASS_MAPPINGS = {
     "EmptyLatentList": EmptyLatentList
 }
+
 for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
     latent_node_class = getattr(latent_nodes, latent_node_name)
     latent_node = latent_node_class()
     
-    class LatentListWrapper():
+    wrapper_name = f"LatentListWrapper_{uuid.uuid4().replace('-', '_')}"
+    ''.format()
+    eval("""class {wrapper_name}():
         @classmethod
         def INPUT_TYPES(s):
             input_types = latent_node_class.INPUT_TYPES()
@@ -17,7 +20,7 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
                 if input_types["required"][key][0] == "LATENT":
                     t = list(input_types["required"][key])
                     t[0] = "LATENT_LIST"
-                    input_types["required"][f"{key}_list"] = tuple(t)
+                    input_types["required"][f"\{key\}_list"] = tuple(t)
                     del input_types["required"][key]
                     break
             return input_types
@@ -42,7 +45,7 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
                 main_kwargs[latent_list_key.replace("_list", '')] = latent
                 del main_kwargs[latent_list_key]
                 return getattr(latent_node, self.MAIN_FUNCTION)(**main_kwargs)
-            return (list(map(process_latent, kwargs[latent_list_key])), )
+            return (list(map(process_latent, kwargs[latent_list_key])), ) """.format(wrapper_name = wrapper_name))
 
     NODE_CLASS_MAPPINGS[latent_node_name.replace(
-        "Latent", "LatentList")] = copy.deepcopy(LatentListWrapper)
+        "Latent", "LatentList")] = copy.deepcopy(locals()[wrapper_name])

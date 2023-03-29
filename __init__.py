@@ -11,11 +11,12 @@ for latent_nodes, latent_node_name in map(lambda latent_node_name: (latent_nodes
         @classmethod
         def INPUT_TYPES(s):
             input_types = latent_node_class.INPUT_TYPES()
-            for key in input_types["required"]:
+            for key in input_types["required"].keys():
                 if input_types["required"][key][0] == "LATENT":
                     t = list(input_types["required"][key])
                     t[0] = "LATENT_LIST"
                     input_types["required"][f"{key}_list"] = tuple(t)
+                    del input_types["required"][key]
                     break
             return input_types
 

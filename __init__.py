@@ -8,7 +8,7 @@ NODE_CLASS_MAPPINGS = {
 for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
     latent_node_class = getattr(latent_nodes, latent_node_name)
     latent_node = latent_node_class()
-
+    
     class LatentListWrapper():
         @classmethod
         def INPUT_TYPES(s):
@@ -23,7 +23,7 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
             return input_types
 
         RETURN_TYPES = ("LATENT_LIST",)
-        CATEGORY = latent_node.CATEGORY
+        CATEGORY = latent_node.CATEGORY.replace("latent", "latent_list")
 
         FUNCTION = "process_latent_list"
 
@@ -45,4 +45,4 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
             return (list(map(process_latent, kwargs[latent_list_key])), )
 
     NODE_CLASS_MAPPINGS[latent_node_name.replace(
-        "Latent", "LatentList")] = LatentListWrapper
+        "Latent", "LatentList")] = copy.deepcopy(LatentListWrapper)

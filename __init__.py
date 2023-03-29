@@ -48,4 +48,4 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
             return (list(map(process_latent, kwargs[latent_list_key])), ) """.format(wrapper_name = wrapper_name))
 
     NODE_CLASS_MAPPINGS[latent_node_name.replace(
-        "Latent", "LatentList")] = copy.deepcopy(locals()[wrapper_name])
+        "Latent", "LatentList")] = locals()[wrapper_name]

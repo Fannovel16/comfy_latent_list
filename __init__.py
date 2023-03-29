@@ -20,7 +20,7 @@ for latent_nodes, latent_node_name in map(lambda latent_node_name: (latent_nodes
                     break
             return input_types
 
-        RETURN_TYPES = latent_node.RETURN_TYPES
+        RETURN_TYPES = ("LATENT_LIST",)
         CATEGORY = latent_node.CATEGORY
 
         FUNCTION = "process_latent_list"

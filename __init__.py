@@ -10,7 +10,7 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
     latent_node_class = getattr(latent_nodes, latent_node_name)
     latent_node = latent_node_class()
     
-    wrapper_name = f"LatentListWrapper_{uuid.uuid4().replace('-', '_')}"
+    wrapper_name = f"LatentListWrapper_{str(uuid.uuid4()).replace('-', '_')}"
     ''.format()
     eval("""class {wrapper_name}():
         @classmethod

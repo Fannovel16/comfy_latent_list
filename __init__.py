@@ -5,7 +5,7 @@ import copy
 NODE_CLASS_MAPPINGS = {
     "EmptyLatentList": EmptyLatentList
 }
-for latent_nodes, latent_node_name in map(lambda latent_node_name: (latent_nodes, latent_node_name), filter(lambda x: "Latent" in x, dir(latent_nodes))):
+for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
     latent_node_class = getattr(latent_nodes, latent_node_name)
     latent_node = latent_node_class()
 

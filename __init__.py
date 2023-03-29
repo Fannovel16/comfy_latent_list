@@ -11,7 +11,7 @@ for latent_node_name in filter(lambda x: "Latent" in x, dir(latent_nodes)):
     latent_node = latent_node_class()
     
     wrapper_name = f"LatentListWrapper_{str(uuid.uuid4()).replace('-', '_')}"
-    eval(f"""class {wrapper_name}():""" + \
+    eval(f"""       class {wrapper_name}():""" + \
     """
         @classmethod
         def INPUT_TYPES(s):
